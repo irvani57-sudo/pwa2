@@ -1,6 +1,6 @@
 {
-  "name": "اپ من - OmidePay",
-  "short_name": "OmidePay",
+  "name": "Alfredo_OmidePay",
+  "short_name": "Alfredo_OmidePay",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -19,3 +19,4 @@
     }
   ]
 }
+
