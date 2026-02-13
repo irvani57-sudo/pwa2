@@ -1,13 +1,17 @@
+// ✅ اسم کش
 const CACHE_NAME = "omidepay-cache-v1";
 
+// ✅ اینجااااا 👇
+// دقیقاً اینجا باید FILES_TO_CACHE باشه
 const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./manifest.json",
-  "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "/pwa2/",
+  "/pwa2/index.html",
+  "/pwa2/manifest.json",
+  "/pwa2/icons/icon-192.png",
+  "/pwa2/icons/icon-512.png"
 ];
 
+// ✅ موقع نصب
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
@@ -17,6 +21,7 @@ self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
+// ✅ موقع فعال شدن
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -32,6 +37,7 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
+// ✅ هندل درخواست‌ها
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(response => {
