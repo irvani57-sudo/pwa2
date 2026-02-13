@@ -3,47 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Alfredo_Omidpay</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
-
   <link rel="manifest" href="manifest.json">
-
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-family: sans-serif;
-      background: #fff;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 25px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      background: #1976d2;
-      color: #fff;
-    }
-  </style>
 </head>
 
-<body>
+<body style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif">
 
-  <strong>Alfredo_Omidpay</strong>
-  <span>به اپ خوش آمدید</span>
+  <h3>Alfredo_Omidpay</h3>
+  <p>به اپ خوش آمدید</p>
 
   <button onclick="go()">ورود</button>
 
   <script>
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
-
-    function go() {
-      window.location.href = GAS_URL;
+    function go(){
+      window.location.href = "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
     }
 
     if ('serviceWorker' in navigator) {
