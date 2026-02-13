@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>OmidePay</title>
+  <title>alfrdo-Omidpay</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
@@ -19,23 +19,26 @@
       font-family: sans-serif;
       background: #ffffff;
       text-align: center;
+      color: #333;
     }
   </style>
 </head>
 
 <body>
-
   <div>
-    <h1>OmidePay</h1>
+    <h1>alfrdo-Omidpay</h1>
     <p>⏳ در حال ورود به اپ...</p>
   </div>
 
   <script>
-    // ✅ ثبت SW فقط یک‌بار
+    // ✅ ثبت Service Worker فقط یک‌بار
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js');
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('Service Worker ثبت شد'))
+        .catch(err => console.error('SW error:', err));
     }
 
+    // ✅ تشخیص دقیق حالت standalone
     function isStandalone() {
       return (
         window.matchMedia('(display-mode: standalone)').matches ||
@@ -44,26 +47,42 @@
     }
 
     let redirected = false;
-
     function tryRedirect() {
       if (redirected) return;
-
       if (isStandalone()) {
         redirected = true;
-        window.location.replace(
-          "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
-        );
+        console.log("📱 حالت نصب‌شده شناسایی شد → انتقال به صفحه اصلی");
+        window.location.replace("https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec");
       }
     }
 
-    // 🔁 چند بار تست، چون Chrome تنبله
+    // 🔁 چند بار امتحان برای اطمینان از تشخیص درست
     tryRedirect();
-    setTimeout(tryRedirect, 500);
+    setTimeout(tryRedirect, 700);
     setTimeout(tryRedirect, 1500);
     setTimeout(tryRedirect, 3000);
-
     document.addEventListener('visibilitychange', tryRedirect);
-  </script>
 
+    // ✅ نمایش دکمه نصب در حالت مرورگر
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      const installButton = document.createElement("button");
+      installButton.innerText = "📲 نصب اپلیکیشن";
+      installButton.style.cssText = "background:#1976d2;color:white;padding:10px 20px;border:none;border-radius:6px;cursor:pointer;font-size:16px;margin-top:15px;";
+      document.body.appendChild(installButton);
+
+      installButton.addEventListener("click", () => {
+        event.prompt();
+        event.userChoice.then(choice => {
+          if (choice.outcome === "accepted") {
+            console.log("✅ اپ نصب شد!");
+            installButton.remove();
+          } else {
+            console.log("❌ نصب کنسل شد!");
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
