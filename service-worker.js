@@ -1,7 +1,15 @@
-self.addEventListener('install', event => {
-  self.skipWaiting();
-});
-
-self.addEventListener('fetch', event => {
-  event.respondWith(fetch(event.request));
-});
+{
+  "name": "اپ اسکریپ من",
+  "short_name": "MyApp",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
