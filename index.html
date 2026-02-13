@@ -1,34 +1,13 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <link rel="manifest" href="manifest.json">
-  <h1>OmidePay</h1>
-<p>خوش آمدید 🌱</p>
-
-<meta name="theme-color" content="#1976d2">
-
   <meta charset="UTF-8">
-  <title>اپ من</title>
+  <title>اپ من - OmidePay</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
 
   <link rel="manifest" href="manifest.json">
-
-  <script>
-    // ثبت Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('✅ Service Worker Registered'))
-        .catch(err => console.log('❌ SW Error', err));
-    }
-
-    // تاخیر کوتاه برای اینکه Chrome بفهمه این PWA ـه
-    setTimeout(() => {
-      window.location.href =
-        "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
-    }, 2500);
-  </script>
 
   <style>
     html, body {
@@ -44,15 +23,27 @@
 </head>
 
 <body>
-  <h3>⏳ در حال ورود به اپ...</h3>
+
+  <div>
+    <h1>OmidePay</h1>
+    <p>⏳ در حال ورود به اپ...</p>
+  </div>
+
   <script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js');
-}
-</script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js')
+        .then(() => console.log('✅ SW Registered'))
+        .catch(err => console.log('❌ SW Error', err));
+    }
+
+    // ⛔ فعلاً اینو کامنت کن تا Install بیاد
+    /*
+    setTimeout(() => {
+      window.location.href =
+        "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
+    }, 2500);
+    */
+  </script>
 
 </body>
 </html>
-
-
-
