@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>اپ من - OmidePay</title>
+  <title>OmidePay</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
@@ -17,7 +17,8 @@
       align-items: center;
       justify-content: center;
       font-family: sans-serif;
-      background: #f5f5f5;
+      background: #ffffff;
+      text-align: center;
     }
   </style>
 </head>
@@ -30,20 +31,34 @@
   </div>
 
   <script>
+    // ✅ Service Worker فقط یک‌بار
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js')
-        .then(() => console.log('✅ SW Registered'))
-        .catch(err => console.log('❌ SW Error', err));
+      navigator.serviceWorker.register('./service-worker.js');
     }
 
-    // ✅ فقط وقتی اپ نصب شده (standal ریدایرکت انجام شود
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setTimeout(() => {
-        window.location.replace(
-          "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
-        );
-      }, 1500);
+    // ✅ تشخیص دقیق حالت نصب‌شده (Android + Chrome safe)
+    function isStandalone() {
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true
+      );
     }
+
+    function redirectIfStandalone() {
+      if (isStandalone()) {
+        setTimeout(() => {
+          window.location.replace(
+            "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
+          );
+        }, 1500);
+      }
+    }
+
+    // ✅ اجرا
+    redirectIfStandalone();
+
+    // ✅ اگه کروم دیر تشخیص داد
+    document.addEventListener('visibilitychange', redirectIfStandalone);
   </script>
 
 </body>
