@@ -5,75 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Alfredo_Omidpay</title>
 
-  <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1976d2">
-
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      margin: 0;
-      padding: 40px 20px;
-    }
-    h1 {
-      color: #1976d2;
-      margin-bottom: 20px;
-    }
-    button {
-      background: #1976d2;
-      color: #fff;
-      border: none;
-      padding: 14px 22px;
-      font-size: 16px;
-      border-radius: 8px;
-      margin: 10px;
-      cursor: pointer;
-    }
-    #installBtn {
-      display: none;
-      background: #2e7d32;
-    }
-  </style>
 </head>
-<body>
 
-  <h1>Alfredo_Omidpay</h1>
-  <p>لانچر رسمی برنامه</p>
+<body style="text-align:center;font-family:sans-serif;padding-top:60px">
 
-  <button onclick="enterApp()">ورود به برنامه</button>
-  <br>
-  <button id="installBtn">نصب برنامه</button>
+<h1>Alfredo_Omidpay</h1>
+<p>نسخه وب رسمی</p>
 
-  <script>
-    // ✅ Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js');
-      });
-    }
+<button onclick="go()" style="padding:12px 20px;font-size:16px">
+ورود به برنامه
+</button>
 
-    // ✅ Install Prompt
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('installBtn').style.display = 'inline-block';
-    });
+<br><br>
 
-    document.getElementById('installBtn').addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-    });
+<button id="install" style="display:none;padding:12px 20px">
+نصب برنامه
+</button>
 
-    // ✅ ورود به Google Apps Script (Redirect مستقیم)
-    function enterApp() {
-      window.location.href = "PASTE_YOUR_GAS_URL_HERE";
-    }
-  </script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+
+let p;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  p = e;
+  document.getElementById('install').style.display = 'inline-block';
+});
+
+document.getElementById('install').onclick = async () => {
+  if (!p) return;
+  p.prompt();
+  await p.userChoice;
+  p = null;
+};
+
+function go() {
+  location.href = "https://script.google.com/macros/s/XXXXXXXX/exec";
+}
+</script>
 
 </body>
 </html>
