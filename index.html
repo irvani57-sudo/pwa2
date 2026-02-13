@@ -31,12 +31,11 @@
   </div>
 
   <script>
-    // ✅ Service Worker فقط یک‌بار
+    // ✅ ثبت SW فقط یک‌بار
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js');
     }
 
-    // ✅ تشخیص دقیق حالت نصب‌شده (Android + Chrome safe)
     function isStandalone() {
       return (
         window.matchMedia('(display-mode: standalone)').matches ||
@@ -44,21 +43,26 @@
       );
     }
 
-    function redirectIfStandalone() {
+    let redirected = false;
+
+    function tryRedirect() {
+      if (redirected) return;
+
       if (isStandalone()) {
-        setTimeout(() => {
-          window.location.replace(
-            "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
-          );
-        }, 1500);
+        redirected = true;
+        window.location.replace(
+          "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
+        );
       }
     }
 
-    // ✅ اجرا
-    redirectIfStandalone();
+    // 🔁 چند بار تست، چون Chrome تنبله
+    tryRedirect();
+    setTimeout(tryRedirect, 500);
+    setTimeout(tryRedirect, 1500);
+    setTimeout(tryRedirect, 3000);
 
-    // ✅ اگه کروم دیر تشخیص داد
-    document.addEventListener('visibilitychange', redirectIfStandalone);
+    document.addEventListener('visibilitychange', tryRedirect);
   </script>
 
 </body>
