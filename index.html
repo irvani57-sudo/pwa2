@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>OmidePay</title>
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
-
   <link rel="manifest" href="manifest.json">
 
   <style>
@@ -20,46 +18,54 @@
       background: #ffffff;
       text-align: center;
     }
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      margin-top: 20px;
+    }
   </style>
 </head>
 
 <body>
 
-  <div>
-    <h1>OmidePay</h1>
-    <p>⏳ در حال ورود به اپ...</p>
-  </div>
+<div>
+  <h1>OmidePay</h1>
+  <p id="status">⏳ در حال بررسی وضعیت...</p>
+  <button id="enterBtn" style="display:none">ورود به اپ</button>
+</div>
 
-  <script>
-    // ✅ Service Worker فقط یک‌بار
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js');
-    }
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js');
+}
 
-    // ✅ تشخیص دقیق حالت نصب‌شده (Android + Chrome safe)
-    function isStandalone() {
-      return (
-        window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true
-      );
-    }
+function isStandalone() {
+  return (
+    window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true
+  );
+}
 
-    function redirectIfStandalone() {
-      if (isStandalone()) {
-        setTimeout(() => {
-          window.location.replace(
-            "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
-          );
-        }, 1500);
-      }
-    }
+const GAS_URL =
+  "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
 
-    // ✅ اجرا
-    redirectIfStandalone();
+if (isStandalone()) {
+  document.getElementById("status").innerText = "✅ ورود به اپ...";
+  setTimeout(() => location.replace(GAS_URL), 800);
+} else {
+  document.getElementById("status").innerText =
+    "📲 برای استفاده کامل، اپ را نصب کنید یا وارد شوید";
+  document.getElementById("enterBtn").style.display = "inline-block";
+}
 
-    // ✅ اگه کروم دیر تشخیص داد
-    document.addEventListener('visibilitychange', redirectIfStandalone);
-  </script>
+document.getElementById("enterBtn").onclick = () => {
+  location.href = GAS_URL;
+};
+</script>
 
 </body>
 </html>
