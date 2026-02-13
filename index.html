@@ -42,6 +42,13 @@
 
 <body>
   <h3>⏳ در حال ورود به اپ...</h3>
+  <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js');
+}
+</script>
+
 </body>
 </html>
+
 
