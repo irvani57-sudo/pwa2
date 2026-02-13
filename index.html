@@ -1,47 +1,20 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <title>alfrdo-Omidpay</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1976d2">
-
-  <link rel="manifest" href="manifest.json">
-
-  <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: sans-serif;
-      background: #ffffff;
-      text-align: center;
+{
+  "name": "alfrdo-Omidpay",
+  "short_name": "alfrdo-Omidpay",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
-  </style>
-</head>
-
-<body>
-
-  <div>
-    <h1>alfrdo-Omidpay</h1>
-    <p>⏳ در حال ورود به اپ...</p>
-  </div>
-
-  <script>
-    // ✅ Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js');
-    }
-
-    // ✅ اگر از حالت نصب اجرا شده → redirect
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      window.location.href =
-        "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
-    }
-  </script>
-
-</body>
-</html>
+  ]
+}
