@@ -2,41 +2,74 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-
-  <!-- ✅ اسم فقط همین -->
-  <title>alfrdo-Omidpay</title>
+  <title>Alfredo_Omidpay</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
 
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
 
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       width: 100%;
-      background: #ffffff;
+      height: 100%;
       font-family: sans-serif;
+      background: #fff;
     }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: #ffffff;
+      z-index: 10;
+    }
+
+    #loading span {
+      margin-top: 12px;
+      color: #555;
+      font-size: 14px;
+    }
+
     iframe {
       width: 100%;
       height: 100%;
       border: none;
+      display: none;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ Google Apps Script مستقیم داخل PWA -->
+  <!-- Loading -->
+  <div id="loading">
+    <strong>Alfredo_Omidpay</strong>
+    <span>در حال ورود به اپ...</span>
+  </div>
+
+  <!-- Google Apps Script -->
   <iframe
+    id="appFrame"
     src="https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
-    allow="fullscreen"
-  ></iframe>
+    allow="fullscreen">
+  </iframe>
 
   <script>
+    const frame = document.getElementById('appFrame');
+    const loading = document.getElementById('loading');
+
+    frame.onload = () => {
+      loading.style.display = 'none';
+      frame.style.display = 'block';
+    };
+
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js');
     }
