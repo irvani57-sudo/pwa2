@@ -1,6 +1,6 @@
 {
-  "name": "Alfredo_OmidePay",
-  "short_name": "Alfredo_OmidePay",
+  "name": "alfrdo-Omidpay",
+  "short_name": "alfrdo-Omidpay",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -19,4 +19,3 @@
     }
   ]
 }
-
