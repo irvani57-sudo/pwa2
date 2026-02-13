@@ -2,21 +2,35 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>اپ من</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1976d2">
-  
+
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js');
     }
-
-    // انتقال مستقیم به اپ اسکریپت
-    window.location.replace("https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec");
   </script>
+
+  <style>
+    body, html {
+      margin: 0;
+      height: 100%;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
 </head>
+
 <body>
-  <p>⏳ در حال بارگذاری اپ...</p>
+  <iframe 
+    src="https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec">
+  </iframe>
 </body>
 </html>
