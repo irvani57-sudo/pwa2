@@ -1,75 +1,92 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1976d2" />
   <title>OmidePay</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1976d2">
-
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+  <!-- لینک به Manifest (با مسیر مطلق) -->
+  <link rel="manifest" href="/pwa2/manifest.json">
+  <!-- آیکون‌ها -->
+  <link rel="icon" href="/pwa2/icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="/pwa2/icons/icon-512.png" />
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #ffffff;
-      font-family: sans-serif;
+    body {
+      font-family: Vazirmatn, sans-serif;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #1976d2, #42a5f5);
+      color: #fff;
       text-align: center;
     }
-
-    .box {
-      width: 100%;
+    #loader {
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 14px;
-      opacity: 0.7;
+    #installBtn {
+      display: none;
+      background-color: #fff;
+      color: #1976d2;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
-
 <body>
-
-  <div class="box">
-    <h1>OmidePay</h1>
-    <p>⏳ در حال ورود به اپلیکیشن...</p>
-  </div>
+  <div id="loader">در حال بارگذاری OmidePay...</div>
+  <button id="installBtn">نصب روی صفحه اصلی 📲</button>
 
   <script>
-    // Register Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js');
-    }
-
-    // Detect Standalone mode
+    // شناسایی حالت PWA نصب‌شده
     function isStandalone() {
-      return (
-        window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true
-      );
+      return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
     }
 
-    // Redirect ONLY in installed PWA
+    // اگر PWA نصب‌شده است، ریدایرکت خودکار بعد از ۱۲۰۰ میلی‌ثانیه
     if (isStandalone()) {
-      setTimeout(function () {
-        window.location.replace(
-          "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
-        );
+      setTimeout(() => {
+        window.location.href = "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
       }, 1200);
     }
-  </script>
 
+    // رجیستر سرویس ورکر (مهم که مسیر مطلق باشه)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/pwa2/service-worker.js")
+      .then(() => console.log("Service Worker ثبت شد ✅"))
+      .catch(err => console.log("خطا در ثبت SW:", err));
+    }
+
+    // هندل کردن ایونت beforeinstallprompt برای دکمه نصب
+    let installPrompt;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      installPrompt = e;
+      document.getElementById("installBtn").style.display = "inline-block";
+    });
+
+    // کلیک روی دکمه نصب
+    document.getElementById("installBtn").addEventListener("click", async () => {
+      if (installPrompt) {
+        installPrompt.prompt();
+        const choice = await installPrompt.userChoice;
+        if (choice.outcome === "accepted") {
+          console.log("کاربر نصب را پذیرفت ✅");
+        } else {
+          console.log("کاربر نصب را رد کرد ❌");
+        }
+        installPrompt = null;
+        document.getElementById("installBtn").style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
