@@ -1,22 +1,65 @@
-{
-  "name": "Alfredo_Omidpay",
-  "short_name": "Alfredo",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1976d2",
-  "orientation": "portrait",
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>OmidePay</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1976d2">
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif;
+      background: #ffffff;
+      text-align: center;
     }
-  ]
-}
+  </style>
+</head>
+
+<body>
+
+  <div>
+    <h1>OmidePay</h1>
+    <p>⏳ در حال ورود به اپ...</p>
+  </div>
+
+  <script>
+    // ✅ ثبت Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js');
+    }
+
+    // ✅ تشخیص دقیق حالت نصب‌شده (PWA)
+    function isStandalone() {
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true
+      );
+    }
+
+    function redirectIfStandalone() {
+      if (isStandalone()) {
+        setTimeout(() => {
+          window.location.replace(
+            "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
+          );
+        }, 1200);
+      }
+    }
+
+    // ✅ اجرا
+    redirectIfStandalone();
+
+    // ✅ اگر Chrome دیر تشخیص داد
+    document.addEventListener('visibilitychange', redirectIfStandalone);
+  </script>
+
+</body>
+</html>
