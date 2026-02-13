@@ -2,70 +2,74 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
+
   <title>OmidePay</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#1976d2">
+
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
 
   <style>
     html, body {
       margin: 0;
+      padding: 0;
       height: 100%;
+      background: #ffffff;
+      font-family: sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: sans-serif;
-      background: #ffffff;
       text-align: center;
     }
-    button {
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      background: #1976d2;
-      color: #fff;
-      margin-top: 20px;
+
+    .box {
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      opacity: 0.7;
     }
   </style>
 </head>
 
 <body>
 
-<div>
-  <h1>OmidePay</h1>
-  <p id="status">⏳ در حال بررسی وضعیت...</p>
-  <button id="enterBtn" style="display:none">ورود به اپ</button>
-</div>
+  <div class="box">
+    <h1>OmidePay</h1>
+    <p>⏳ در حال ورود به اپلیکیشن...</p>
+  </div>
 
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js');
-}
+  <script>
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js');
+    }
 
-function isStandalone() {
-  return (
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true
-  );
-}
+    // Detect Standalone mode
+    function isStandalone() {
+      return (
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true
+      );
+    }
 
-const GAS_URL =
-  "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec";
-
-if (isStandalone()) {
-  document.getElementById("status").innerText = "✅ ورود به اپ...";
-  setTimeout(() => location.replace(GAS_URL), 800);
-} else {
-  document.getElementById("status").innerText =
-    "📲 برای استفاده کامل، اپ را نصب کنید یا وارد شوید";
-  document.getElementById("enterBtn").style.display = "inline-block";
-}
-
-document.getElementById("enterBtn").onclick = () => {
-  location.href = GAS_URL;
-};
-</script>
+    // Redirect ONLY in installed PWA
+    if (isStandalone()) {
+      setTimeout(function () {
+        window.location.replace(
+          "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
+        );
+      }, 1200);
+    }
+  </script>
 
 </body>
 </html>
