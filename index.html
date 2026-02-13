@@ -44,6 +44,20 @@
     }, 2500);
     */
   </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js');
+  }
+
+  // ✅ بعد از باز شدن اپ → برو به Apps Script
+  setTimeout(() => {
+    window.location.replace(
+      "https://script.google.com/macros/s/AKfycbwR_6ldbYI3JXCrjPcy7VHqk66150JyIib4lwfO-ktdgZC8vq3rDOfV7brgaQwU8e2yYA/exec"
+    );
+  }, 1500);
+</script>
+
 
 </body>
 </html>
+
